@@ -1,0 +1,59 @@
+.header {
+  height: 30rem;
+  box-sizing: border-box;
+  border-bottom: 1px solid #8b3b29;
+
+  .wrap {
+    .logo {
+      display: flex;
+      width: 20rem;
+      margin-left: auto;
+      margin-right: auto;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .callToActions {
+      display: flex;
+      justify-content: center;
+
+      ul,
+      li {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        margin-top: 0;
+      }
+
+      li {
+        display: inline-block;
+        list-style-type: none;
+        margin-right: 1.5rem;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        a,
+        span {
+          font-size: 1.8rem;
+          line-height: 1;
+          color: black;
+          text-decoration: none;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .dateClose {
+      display: flex;
+      justify-content: center;
+      padding: 50px 5px;
+      font-size: 15px;
+    }
+  }
+}

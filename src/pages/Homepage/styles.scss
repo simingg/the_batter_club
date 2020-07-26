@@ -1,0 +1,15 @@
+.homepage {
+  height: calc(100%);
+  width: 100%;
+}
+.section-c .gallery {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: 100px 100px;
+  position: absolute;
+}
+
+.section-c .gallery .lightbox-wrapper .img-open img {
+  height: 100%;
+  width: 100%;
+}
