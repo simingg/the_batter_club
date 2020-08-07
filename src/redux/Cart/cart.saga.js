@@ -64,28 +64,20 @@ export function* getCartFromUserAuth(user, date, cart) {
 
 export const handleSendCartData = async ({ user: { id }, date, cart }) => {
   const orderRef = firestore.collection("users").doc(id);
-  var arr = [];
-  let itemName = cart.map((x) => x.name);
-  let itemQ = cart.map((y) => y.quantity);
-  arr.push(itemName, itemQ, date);
+  const dateObj = { dateDeliver: date };
+  const newArr = [];
+  cart.map((item) => {
+    const clonedItem = { ...item, ...dateObj };
+    newArr.push(clonedItem);
+  });
   try {
     await orderRef.update({
-      orderedItems: flatDeep(arr),
+      orderedItems: newArr,
     });
   } catch (err) {
     console.log(err);
   }
 };
-
-function flatDeep(arr, d = 1) {
-  return d > 0
-    ? arr.reduce(
-        (acc, val) =>
-          acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val),
-        []
-      )
-    : arr.slice();
-}
 
 export default function* userSagas() {
   yield all([call(onAddDetailStart), call(onSendCartData)]);

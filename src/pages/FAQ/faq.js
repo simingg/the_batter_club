@@ -33,7 +33,7 @@ const FAQ = (props) => {
 
   const styles = {
     // bgColor: 'white',
-    titleTextColor: "blue",
+    titleTextColor: "red",
     rowTitleColor: "blue",
     // rowContentColor: 'grey',
     // arrowColor: "red",

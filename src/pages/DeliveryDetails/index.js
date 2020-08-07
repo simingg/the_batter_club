@@ -41,6 +41,7 @@ const DeliveryDetails = (state) => {
 
   const handleButton = () => {
     dispatch(sendCartData(currentUser, deliverDate, cart));
+    const { name } = cart;
     history.push("/payment");
   };
 
@@ -74,11 +75,11 @@ const DeliveryDetails = (state) => {
             options={[
               {
                 value: moment().day(7).format("MM-DD"),
-                name: "Sunday",
+                name: moment().day(7).format("MM-DD"),
               },
               {
                 value: moment().day(6).format("MM-DD"),
-                name: "Saturday",
+                name: moment().day(7).format("MM-DD"),
               },
             ]}
             handleChange={(e) => setDeliverDate(e.target.value)}

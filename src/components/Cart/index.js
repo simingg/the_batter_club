@@ -9,9 +9,15 @@ import {
   delQtyItem,
 } from "../../redux/Cart/cart.actions";
 import { Alert } from "../forms/alert";
-import minusCircle from "../../assets/minusCircle.svg";
-import addCircle from "../../assets/addCircle.svg";
-import delCircle from "../../assets/delCircle.svg";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 
 class Cart extends Component {
   constructor(props) {
@@ -19,19 +25,27 @@ class Cart extends Component {
     this.state = {
       cartTotal: 0,
       open: false,
+      signUpAlert: false,
     };
   }
 
   handleOpen = () => this.setState({ open: true });
 
+  handleOpenAlert = () => this.setState({ signUpAlert: true });
+
   handleClose = () => this.setState({ open: false });
+
+  handleCloseAlert = () => this.setState({ signUpAlert: false });
 
   handleBack() {
     return this.props.history.push("/regular");
   }
 
   handleCheckout() {
-    const { cart } = this.props;
+    const { cart, user } = this.props;
+    if (user === null) {
+      this.handleOpenAlert();
+    }
     if (cart.quantityByName.length === 0) {
       this.handleOpen();
     } else {
@@ -42,54 +56,56 @@ class Cart extends Component {
   render() {
     const { cart } = this.props;
     let product = cart.quantityByName.map((item) => {
-      const { name, price, quantity, total } = item;
+      const { name, quantity, size, total } = item;
       return (
-        <div className="item">
-          <div className="buttons">
-            <span
-              className="delete-btn"
+        <ListItem alignItems="flex-start" key={name}>
+          <ListItemAvatar>
+            <IconButton
               onClick={() => {
                 this.props.handleDelQtyItem({ name });
               }}
             >
-              <img src={delCircle} alt="" />
-            </span>
-          </div>
-          <div className="description">
-            <span> {name} </span>
-          </div>
-          <div className="quantity">
-            <button
-              className="plus-btn"
-              type="button"
-              name="button"
-              onClick={() => {
-                this.props.handleAddQtyItem({ name });
-              }}
-            >
-              <img src={addCircle} alt="" />
-            </button>
-            <input type="text" name="name" value={quantity} />
-            <button
-              className="minus-btn"
-              type="button"
-              name="button"
-              onClick={() => {
-                this.props.handleMinusQtyItem({ name });
-              }}
-            >
-              <img src={minusCircle} alt="" />
-            </button>
-            <div className="total"> ${total} </div>
-          </div>
-        </div>
+              <DeleteIcon />
+            </IconButton>
+          </ListItemAvatar>
+          <ListItemText primary={name} secondary={size} />
+          <ListItemSecondaryAction>
+            <div className="quantity">
+              <IconButton
+                edge="end"
+                aria-label="minus"
+                onClick={() => {
+                  this.props.handleMinusQtyItem({ name });
+                }}
+              >
+                <RemoveCircleIcon />
+              </IconButton>
+              <input
+                styles={{ fontSize: "18px" }}
+                type="text"
+                name="name"
+                value={quantity}
+              />
+              <IconButton
+                edge="end"
+                aria-label="add"
+                onClick={() => {
+                  this.props.handleAddQtyItem({ name });
+                }}
+              >
+                <AddCircleIcon />
+              </IconButton>
+            </div>
+            <div className="sub-total"> ${total} </div>
+          </ListItemSecondaryAction>
+        </ListItem>
       );
     });
 
     return (
       <div className="shopping-cart">
         <div className="heading"> Cart </div>
-        {product}
+        <List>{product}</List>
         <div className="total-price">Total: ${this.props.total}</div>
         <button className="continue" onClick={() => this.handleBack()}>
           {" "}
@@ -113,6 +129,15 @@ class Cart extends Component {
             No Items in Cart. Please Add Item :>
           </Alert>
         </Snackbar>
+        <Snackbar
+          open={this.state.signUpAlert}
+          autoHideDuration={3000}
+          onClose={this.handleCloseAlert}
+        >
+          <Alert onClose={this.handleCloseAlert} severity="error">
+            Please Log In or Sign Up before checking out!
+          </Alert>
+        </Snackbar>
       </div>
     );
   }
@@ -121,6 +146,7 @@ class Cart extends Component {
 const mapStateToProps = (state) => {
   return {
     cart: state.cart,
+    user: state.user.currentUser,
     total: state.cart.quantityByName.reduce(
       (accTotal, item) => parseInt(accTotal, 10) + parseInt(item.total, 10),
       0
@@ -130,8 +156,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleAddQtyItem: (name) => dispatch(minusQtyItem(name)),
-    handleMinusQtyItem: (name) => dispatch(addQtyItem(name)),
+    handleMinusQtyItem: (name) => dispatch(minusQtyItem(name)),
+    handleAddQtyItem: (name) => dispatch(addQtyItem(name)),
     handleDelQtyItem: (name) => dispatch(delQtyItem(name)),
   };
 };

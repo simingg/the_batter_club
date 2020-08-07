@@ -30,7 +30,6 @@ export const handleUserProfile = async ({ userAuth, additionalData }) => {
     const timestamp = new Date();
     const userRoles = ["user"];
     const address = ["pick-up"];
-    const phoneNumber = "";
     const orderedItems = [];
 
     try {
@@ -42,7 +41,6 @@ export const handleUserProfile = async ({ userAuth, additionalData }) => {
         ...additionalData,
         address,
         orderedItems,
-        phoneNumber,
       });
     } catch (err) {
       console.log(err);

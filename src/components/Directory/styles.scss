@@ -51,16 +51,16 @@
     }
 
     .about {
-      position: absolute;
       display: flex;
-      height: 40%;
-      top: 80%;
-      left: 20%;
 
       article {
-        transform: translate(-50%, -50%);
         padding: 20px;
         font-size: 16px;
+
+        .link {
+          font-size: 13px;
+          font-style: italic;
+        }
       }
     }
   }

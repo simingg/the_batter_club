@@ -1,65 +1,42 @@
-.container .product {
-  margin: 10px 10px;
+.container-product {
   width: 50%;
+  height: 450px;
+  float: left;
+  display: block;
 }
 
-.container .product:hover {
-  box-shadow: 0px 0px 21px 3px rgba(0, 0, 0, 0.11);
+.container-product .product {
+  padding: 30px 30px;
 }
 
-.container .product .img-container img {
-  object-fit: cover;
-  width: 80%;
-  height: 80%;
+.container-product .product-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.container .product .product-info {
+.container-product .product.img-container {
+  box-sizing: border-box;
+}
+
+.container-product .product .product-info {
   background: #f1eadd;
 }
 
-.container .product .product-info .product-content {
-  padding: 0.2em 0 0.2em 1em;
+.container-product .product .product-info .product-content {
+  padding: 0.5em 0 0.5em 1em;
 }
-.container .product .product-info .product-content h1 {
-  font-size: 1.5em;
+.container-product .product .product-info .product-content h1 {
+  font-size: 1.1em;
 }
-.container .product .product-info .product-content p {
+.container-product .product .product-info .product-content p {
   color: #636363;
   font-size: 0.9em;
-  font-weight: bold;
-  width: 90%;
+  width: 100%;
 }
 
-.container .product .product-info .product-content .buttons {
+.container-product .product .product-info .product-content .buttons {
+  width: 350px;
   padding-top: 0.4em;
-}
-.container .product .product-info .product-content .buttons .button {
-  text-decoration: none;
-  color: #5e5e5e;
-  font-weight: bold;
-  padding: 0.3em 0.65em;
-  border-radius: 2.3px;
-  transition: all 0.1s ease-in-out;
-}
-.container .product .product-info .product-content .buttons .add {
-  border: 1px #5e5e5e solid;
-}
-.container .product .product-info .product-content .buttons .add:hover {
-  border-color: #6997b6;
-  color: #6997b6;
-}
-.container .product .product-info .product-content .buttons .buy {
-  border: 1px #5e5e5e solid;
-}
-.container .product .product-info .product-content .buttons .buy:hover {
-  border-color: #6997b6;
-  color: #6997b6;
-}
-.container .product .product-info .product-content .buttons #price {
-  margin-left: 20em;
-  width: 50px;
-  color: #8b3b28;
-  font-weight: bold;
-  border: 1px solid rgba(137, 137, 137, 0.2);
-  background: rgba(137, 137, 137, 0.04);
 }

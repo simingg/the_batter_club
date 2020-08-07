@@ -52,3 +52,41 @@ export const handleDeleteProduct = (documentID) => {
       });
   });
 };
+
+export const handleOosProduct = (documentID) => {
+  console.log(documentID, 1);
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("products")
+      .doc(documentID)
+      .update({
+        oos: true,
+      })
+      .then(() => {
+        console.log(documentID, 2);
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+export const handleInStockProduct = (documentID) => {
+  console.log(documentID, 1);
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("products")
+      .doc(documentID)
+      .update({
+        oos: false,
+      })
+      .then(() => {
+        console.log(documentID, 2);
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};

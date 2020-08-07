@@ -36,6 +36,9 @@ const Header = (props) => {
                 <Link to="/faq"> FAQ </Link>
               </li>
               <li>
+                <Link to="about"> About Us </Link>
+              </li>
+              <li>
                 <Link to="/regular"> Our Bakes</Link>
               </li>
               <li>
@@ -59,6 +62,9 @@ const Header = (props) => {
               </li>
               <li>
                 <Link to="/regular"> Our Bakes</Link>
+              </li>
+              <li>
+                <Link to="about"> About Us </Link>
               </li>
             </ul>
           )}

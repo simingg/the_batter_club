@@ -15,21 +15,30 @@ const Directory = (props) => {
         </div>
         <div className="about">
           <article>
+            <h4> About Us </h4>{" "}
             <p>
-              <h4> About Us </h4> Her mom had warned her. She had been warned
-              time and again, but she had refused to believe her. She had done
-              everything right and she knew she would be rewarded for doing so
-              with the promotion. So when the promotion was given to her main
-              rival, it not only stung, <Link to="/about"> Read More...</Link>
+              {" "}
+              Her mom had warned her. She had been warned time and again, but
+              she had refused to believe her. She had done everything right and
+              she knew she would be rewarded for doing so with the promotion. So
+              when the promotion was given to her main rival, it not only stung,{" "}
+              <Link className="link" to="/about">
+                {" "}
+                Read More...
+              </Link>
             </p>
           </article>
           <article>
+            <h4> Our Bakes </h4>{" "}
             <p>
-              <h4> Our Bakes </h4> Her mom had warned her. She had been warned
-              time and again, but she had refused to believe her. She had done
-              everything right and she knew she would be rewarded for doing so
-              with the promotion. So when the promotion was given to her main
-              rival, it not only stung, <Link to="/regular"> Read More...</Link>
+              Her mom had warned her. She had been warned time and again, but
+              she had refused to believe her. She had done everything right and
+              she knew she would be rewarded for doing so with the promotion. So
+              when the promotion was given to her main rival, it not only stung,{" "}
+              <Link className="link" to="/regular">
+                {" "}
+                Read More...
+              </Link>
             </p>
           </article>
         </div>

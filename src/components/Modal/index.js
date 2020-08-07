@@ -3,6 +3,7 @@ import "./styles.scss";
 
 const Modal = ({ hideModal, toggleModal, children }) => {
   if (hideModal) return null;
+  console.log(hideModal);
 
   return (
     <>

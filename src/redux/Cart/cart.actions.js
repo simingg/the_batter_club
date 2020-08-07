@@ -1,12 +1,9 @@
 import "./cart.types";
 import cartTypes from "./cart.types";
 
-export const addToCart = (product) => ({
+export const addToCart = (productInfo) => ({
   type: cartTypes.ADD_TO_CART,
-  payload: {
-    productName: product.productName,
-    productPrice: product.productPrice,
-  },
+  payload: productInfo,
 });
 
 export const fetchCartData = () => ({

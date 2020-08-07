@@ -18,3 +18,13 @@ export const deleteProductStart = (productID) => ({
   type: productsTypes.DELETE_PRODUCT_START,
   payload: productID,
 });
+
+export const oosProductStart = (productID) => ({
+  type: productsTypes.SET_OOS_PRODUCT,
+  payload: productID,
+});
+
+export const inProductHandle = (productID) => ({
+  type: productsTypes.SET_IN_STOCK,
+  payload: productID,
+});

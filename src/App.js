@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { checkUserSession } from "./redux/User/user.actions";
@@ -7,13 +7,14 @@ import AdminToolbar from "./components/AdminToolbar";
 //hoc
 import WithAuth from "./hoc/withAuth";
 import WithAdminAuth from "./hoc/withAdminAuth";
+import OrderLsHook from "./customHooks/OrderLsHook";
 
 //layouts
 import MainLayout from "./layouts/MainLayout";
 import HomepageLayout from "./layouts/HomepageLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
-import MenuLayout from "./layouts/ProductsLayout";
+import MenuLayout from "./layouts/MenuLayout";
 
 // pages
 import "./default.scss";
@@ -27,15 +28,26 @@ import About from "./pages/About";
 import Regular from "./pages/Regular";
 import Special from "./pages/Special";
 import Details from "./pages/DeliveryDetails";
-import OrderList from "./pages/OrderList";
 import Payment from "./components/Payment";
 import FAQ from "./pages/FAQ/faq";
+import { fetchOrders } from "./redux/Orders/orders.actions";
 
 const App = (props) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(checkUserSession());
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchOrders());
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 2000);
   }, []);
 
   return (
@@ -101,7 +113,7 @@ const App = (props) => {
             render={() => (
               <WithAdminAuth>
                 <AdminLayout>
-                  <OrderList />
+                  <OrderLsHook contLoading={loading} />
                 </AdminLayout>
               </WithAdminAuth>
             )}
@@ -154,9 +166,9 @@ const App = (props) => {
           <Route
             path="/faq"
             render={() => (
-              <MenuLayout>
+              <MainLayout>
                 <FAQ />
-              </MenuLayout>
+              </MainLayout>
             )}
           />
         </Switch>

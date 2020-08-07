@@ -5,11 +5,16 @@ import {
   addProductStart,
   fetchProductsStart,
   deleteProductStart,
+  oosProductStart,
+  inProductHandle,
 } from "./../../redux/Products/products.actions";
 import Modal from "./../../components/Modal";
 import FormInput from "./../../components/forms/FormInput";
 import FormSelect from "./../../components/forms/FormSelect";
 import Button from "./../../components/forms/Button";
+import AddIcon from "@material-ui/icons/Add";
+import IconButton from "@material-ui/core/IconButton";
+import TextField from "@material-ui/core/TextField";
 
 const mapState = ({ productsData }) => ({
   products: productsData.products,
@@ -22,8 +27,12 @@ const Admin = (props) => {
   const [productCategory, setProductCategory] = useState("regular");
   const [productName, setProductName] = useState("");
   const [productThumbnail, setProductThumbnail] = useState("");
-  const [productPrice, setProductPrice] = useState(0);
+  const [productThumbnail2, setProductThumbnail2] = useState("");
+  const [productThumbnail3, setProductThumbnail3] = useState("");
+  const [productPriceArray, setProductPriceArray] = useState([]);
   const [productDescription, setProductDescription] = useState("");
+  const [productSize, setProductSize] = useState("");
+  const [productPrice, setProductPrice] = useState(0);
 
   useEffect(() => {
     dispatch(fetchProductsStart());
@@ -41,8 +50,19 @@ const Admin = (props) => {
     setProductCategory("reg");
     setProductName("");
     setProductThumbnail("");
-    setProductPrice(0);
+    setProductThumbnail2("");
+    setProductThumbnail3("");
+    setProductPriceArray([]);
     setProductDescription("");
+  };
+
+  const resetPrice = () => {
+    setProductPriceArray((result) => [
+      ...result,
+      { size: productSize, price: productPrice },
+    ]);
+    setProductPrice(0);
+    setProductSize("");
   };
 
   const handleSubmit = (e) => {
@@ -54,7 +74,9 @@ const Admin = (props) => {
         productCategory,
         productName,
         productThumbnail,
-        productPrice,
+        productThumbnail2,
+        productThumbnail3,
+        productPriceArray,
         productDescription,
       })
     );
@@ -82,7 +104,7 @@ const Admin = (props) => {
               label="Category"
               options={[
                 {
-                  value: "Whole Cakes",
+                  value: "regular",
                   name: "Whole Cakes",
                 },
                 {
@@ -90,11 +112,11 @@ const Admin = (props) => {
                   name: "Weekly Specials",
                 },
                 {
-                  value: "Cookies",
+                  value: "regular",
                   name: "Reg Cookies",
                 },
                 {
-                  value: "Dessert Boxes",
+                  value: "regular",
                   name: "Reg Boxes",
                 },
               ]}
@@ -120,17 +142,34 @@ const Admin = (props) => {
               value={productThumbnail}
               handleChange={(e) => setProductThumbnail(e.target.value)}
             />
-
             <FormInput
-              label="Price"
-              type="number"
-              min="0.00"
-              max="10000.00"
-              step="0.01"
-              value={productPrice}
-              handleChange={(e) => setProductPrice(e.target.value)}
+              label="second image URL"
+              type="url"
+              value={productThumbnail2}
+              handleChange={(e) => setProductThumbnail2(e.target.value)}
             />
 
+            <FormInput
+              label="third image URL"
+              type="url"
+              value={productThumbnail3}
+              handleChange={(e) => setProductThumbnail3(e.target.value)}
+            />
+            <TextField
+              styles={{ width: "30ch" }}
+              id="standard-basic"
+              label="Price"
+              onChange={(e) => setProductPrice(e.target.value)}
+            />
+            <TextField
+              styles={{ width: "30ch" }}
+              id="standard-basic"
+              label="Size"
+              onChange={(e) => setProductSize(e.target.value)}
+            />
+            <IconButton aria-label="submit tag" onClick={() => resetPrice()}>
+              <AddIcon />
+            </IconButton>
             <Button className="button" type="submit">
               Add product
             </Button>
@@ -162,6 +201,7 @@ const Admin = (props) => {
                         productPrice,
                         productDescription,
                         documentID,
+                        oos,
                       } = product;
 
                       return (
@@ -170,7 +210,6 @@ const Admin = (props) => {
                             <img className="thumb" src={productThumbnail} />
                           </td>
                           <td>{productName}</td>
-                          <td>${productPrice}</td>
                           <td> {productDescription}</td>
                           <td>
                             <Button
@@ -181,6 +220,26 @@ const Admin = (props) => {
                             >
                               Delete
                             </Button>
+                            {oos ? (
+                              <Button
+                                className="button"
+                                onClick={() =>
+                                  dispatch(inProductHandle(documentID))
+                                }
+                              >
+                                {" "}
+                                set inStock{" "}
+                              </Button>
+                            ) : (
+                              <Button
+                                className="button"
+                                onClick={() =>
+                                  dispatch(oosProductStart(documentID))
+                                }
+                              >
+                                setOOS
+                              </Button>
+                            )}
                           </td>
                         </tr>
                       );

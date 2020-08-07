@@ -44,10 +44,6 @@
 
   table.results {
     tr {
-      &:nth-child(even) {
-        background-color: #d3d3d3;
-      }
-
       .thumb {
         width: 15rem;
         margin: 0 auto;

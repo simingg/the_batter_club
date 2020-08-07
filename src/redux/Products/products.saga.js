@@ -5,8 +5,9 @@ import {
   handleAddProduct,
   handleFetchProducts,
   handleDeleteProduct,
+  handleOosProduct,
+  handleInStockProduct,
 } from "./products.helpers";
-
 import productsTypes from "./products.types";
 
 export function* addProduct({
@@ -15,7 +16,9 @@ export function* addProduct({
     productCategory,
     productName,
     productThumbnail,
-    productPrice,
+    productThumbnail2,
+    productThumbnail3,
+    productPriceArray,
     productDescription,
   },
 }) {
@@ -26,10 +29,13 @@ export function* addProduct({
       productCategory,
       productName,
       productThumbnail,
-      productPrice,
+      productThumbnail2,
+      productThumbnail3,
+      productPriceArray,
       productDescription,
       productAdminUserUID: auth.currentUser.uid,
       createdDate: timestamp,
+      oos: false,
     });
     yield put(fetchProductsStart());
   } catch (err) {
@@ -67,11 +73,37 @@ export function* onDeleteProductStart() {
   yield takeLatest(productsTypes.DELETE_PRODUCT_START, deleteProduct);
 }
 
+export function* oosProduct({ payload }) {
+  try {
+    yield handleOosProduct(payload);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* onOosProductStart() {
+  yield takeLatest(productsTypes.SET_OOS_PRODUCT, oosProduct);
+}
+
+export function* inStockProduct({ payload }) {
+  try {
+    yield handleInStockProduct(payload);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* onInStockProductStart() {
+  yield takeLatest(productsTypes.SET_IN_STOCK, inStockProduct);
+}
+
 export default function* productsSagas() {
   yield all([
     //call generator functions
     call(onAddProductStart),
     call(onFetchProductsStart),
     call(onDeleteProductStart),
+    call(onOosProductStart),
+    call(onInStockProductStart),
   ]);
 }

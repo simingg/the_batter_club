@@ -9,15 +9,16 @@ const INITSTATE = {
 const cartsReducer = (state = INITSTATE, action) => {
   switch (action.type) {
     case cartTypes.ADD_TO_CART:
-      const { productName, productPrice } = action.payload;
+      const { name, size, price } = action.payload;
       return Object.assign({}, state, {
         quantityByName: [
           ...state.quantityByName,
           {
-            name: productName.productName,
-            price: productName.productPrice,
+            name: name,
+            price: price,
+            size: size,
             quantity: 1,
-            total: parseInt(productName.productPrice, 10),
+            total: parseInt(price, 10),
           },
         ],
       });
